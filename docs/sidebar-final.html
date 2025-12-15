@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Writing Companion — Sidebar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+        }
+
+        /* Sidebar Container */
+        .sidebar-wrapper {
+            position: relative;
+        }
+
+        .sidebar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(59, 130, 246, 0.3));
+            border-radius: 18px;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .sidebar {
+            --swc-bg-primary: #1e1e1e;
+            --swc-bg-secondary: #262626;
+            --swc-bg-tertiary: #2f2f2f;
+            --swc-bg-active: #383838;
+            --swc-border-color: #3a3a3a;
+            --swc-border-color-hover: #4a4a4a;
+            --swc-text-primary: #e0e0e0;
+            --swc-text-secondary: #a0a0a0;
+            --swc-text-faint: #666;
+            --swc-accent: #7c3aed;
+            --swc-accent-hover: #6d28d9;
+            --swc-space-1: 4px;
+            --swc-space-2: 8px;
+            --swc-space-3: 12px;
+            --swc-space-4: 16px;
+            --swc-font-mono: 'JetBrains Mono', monospace;
+            --swc-radius-sm: 4px;
+            --swc-radius-md: 6px;
+            --swc-radius-lg: 8px;
+            --swc-radius-full: 9999px;
+            --swc-status-local: #22c55e;
+            --swc-status-cloud: #eab308;
+            --swc-status-offline: #ef4444;
+            --swc-status-checking: #3b82f6;
+            --swc-metric-good: #22c55e;
+            --swc-metric-ok: #f59e0b;
+            --swc-metric-bad: #ef4444;
+
+            width: 320px;
+            height: 700px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: var(--swc-bg-primary);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+
+        /* Companion View */
+        .swc-companion {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: var(--swc-space-3);
+            font-size: 13px;
+            color: var(--swc-text-primary);
+            overflow-y: auto;
+        }
+
+        .swc-companion::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .swc-companion::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .swc-companion::-webkit-scrollbar-thumb {
+            background: var(--swc-border-color);
+            border-radius: var(--swc-radius-full);
+        }
+
+        /* Header */
+        .swc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: var(--swc-space-3);
+            border-bottom: 1px solid var(--swc-border-color);
+            margin-bottom: var(--swc-space-3);
+        }
+
+        .swc-header__left {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+        }
+
+        .swc-header__icon {
+            font-size: 18px;
+        }
+
+        .swc-header__title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .swc-header__right {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+        }
+
+        /* Status Dot */
+        .swc-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: var(--swc-radius-full);
+            cursor: help;
+            background: var(--swc-status-local);
+            box-shadow: 0 0 8px var(--swc-status-local);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 8px var(--swc-status-local); }
+            50% { box-shadow: 0 0 16px var(--swc-status-local); }
+        }
+
+        /* Icon Button */
+        .swc-icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: var(--swc-radius-sm);
+            background: transparent;
+            color: var(--swc-text-secondary);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .swc-icon-button:hover {
+            background: var(--swc-bg-tertiary);
+            color: var(--swc-text-primary);
+        }
+
+        .swc-icon-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Document Card */
+        .swc-document-card {
+            background: var(--swc-bg-secondary);
+            border-radius: var(--swc-radius-md);
+            padding: var(--swc-space-3);
+            margin-bottom: var(--swc-space-3);
+        }
+
+        .swc-document-card__filename {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .swc-document-card__icon {
+            opacity: 0.7;
+        }
+
+        .swc-document-card__stats {
+            font-size: 12px;
+            color: var(--swc-text-secondary);
+        }
+
+        /* Section */
+        .swc-section {
+            margin-bottom: var(--swc-space-3);
+        }
+
+        .swc-section__header {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+            padding: var(--swc-space-2) 0;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.15s;
+        }
+
+        .swc-section__header:hover {
+            color: var(--swc-accent);
+        }
+
+        .swc-section__chevron {
+            width: 16px;
+            height: 16px;
+            color: var(--swc-text-secondary);
+            transition: transform 0.2s;
+        }
+
+        .swc-section--collapsed .swc-section__chevron {
+            transform: rotate(-90deg);
+        }
+
+        .swc-section__title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--swc-text-secondary);
+            flex-grow: 1;
+        }
+
+        .swc-section__badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: var(--swc-radius-full);
+            background: var(--swc-metric-ok);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .swc-section__content {
+            padding: var(--swc-space-2) 0;
+            overflow: hidden;
+            max-height: 500px;
+            transition: max-height 0.3s ease, opacity 0.2s, padding 0.2s;
+        }
+
+        .swc-section--collapsed .swc-section__content {
+            max-height: 0;
+            opacity: 0;
+            padding: 0;
+        }
+
+        /* Meter */
+        .swc-meter {
+            margin-bottom: var(--swc-space-3);
+        }
+
+        .swc-meter__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .swc-meter__label {
+            font-size: 12px;
+            color: var(--swc-text-secondary);
+        }
+
+        .swc-meter__value {
+            font-size: 13px;
+            font-weight: 600;
+            font-family: var(--swc-font-mono);
+        }
+
+        .swc-meter__track {
+            height: 6px;
+            background: var(--swc-bg-tertiary);
+            border-radius: var(--swc-radius-full);
+            overflow: hidden;
+        }
+
+        .swc-meter__fill {
+            height: 100%;
+            border-radius: var(--swc-radius-full);
+            transition: width 0.5s ease;
+        }
+
+        .swc-meter__fill--good { background: var(--swc-metric-good); }
+        .swc-meter__fill--ok { background: var(--swc-metric-ok); }
+        .swc-meter__fill--bad { background: var(--swc-metric-bad); }
+
+        .swc-meter__hint {
+            font-size: 11px;
+            color: var(--swc-text-faint);
+            margin-top: 4px;
+        }
+
+        /* Metric */
+        .swc-metric {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+            padding: 6px 0;
+            font-size: 12px;
+        }
+
+        .swc-metric__dot {
+            width: 6px;
+            height: 6px;
+            border-radius: var(--swc-radius-full);
+        }
+
+        .swc-metric__dot--good { background: var(--swc-metric-good); }
+        .swc-metric__dot--ok { background: var(--swc-metric-ok); }
+        .swc-metric__dot--bad { background: var(--swc-metric-bad); }
+
+        .swc-metric__label {
+            color: var(--swc-text-secondary);
+        }
+
+        .swc-metric__value {
+            margin-left: auto;
+            font-family: var(--swc-font-mono);
+            font-weight: 500;
+        }
+
+        /* View All */
+        .swc-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--swc-accent);
+            cursor: pointer;
+            margin-top: var(--swc-space-2);
+            transition: color 0.15s;
+        }
+
+        .swc-view-all:hover {
+            color: var(--swc-accent-hover);
+        }
+
+        .swc-view-all svg {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.15s;
+        }
+
+        .swc-view-all:hover svg {
+            transform: translateX(2px);
+        }
+
+        /* Actions */
+        .swc-actions {
+            margin-bottom: var(--swc-space-3);
+        }
+
+        .swc-actions__grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--swc-space-2);
+        }
+
+        .swc-actions__selection {
+            text-align: center;
+            font-size: 11px;
+            color: var(--swc-text-faint);
+            margin-top: var(--swc-space-2);
+        }
+
+        /* Action Button */
+        .swc-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--swc-space-2);
+            padding: 10px var(--swc-space-3);
+            border: 1px solid var(--swc-border-color);
+            border-radius: var(--swc-radius-md);
+            background: var(--swc-bg-primary);
+            color: var(--swc-text-primary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .swc-action-btn:hover {
+            background: var(--swc-bg-tertiary);
+            border-color: var(--swc-border-color-hover);
+        }
+
+        .swc-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .swc-action-btn--primary {
+            background: var(--swc-accent);
+            border-color: var(--swc-accent);
+            color: white;
+        }
+
+        .swc-action-btn--primary:hover {
+            background: var(--swc-accent-hover);
+            border-color: var(--swc-accent-hover);
+        }
+
+        .swc-action-btn__icon {
+            font-size: 14px;
+        }
+
+        /* Persona */
+        .swc-persona {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--swc-space-3);
+            padding: var(--swc-space-3);
+            border: 1px solid var(--swc-border-color);
+            border-radius: var(--swc-radius-md);
+            margin-bottom: var(--swc-space-2);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .swc-persona:hover {
+            background: var(--swc-bg-tertiary);
+            border-color: var(--swc-border-color-hover);
+        }
+
+        .swc-persona:last-child {
+            margin-bottom: 0;
+        }
+
+        .swc-persona__icon {
+            font-size: 20px;
+        }
+
+        .swc-persona__content {
+            flex: 1;
+        }
+
+        .swc-persona__name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .swc-persona__description {
+            font-size: 12px;
+            color: var(--swc-text-secondary);
+        }
+
+        .swc-persona__arrow {
+            color: var(--swc-text-faint);
+            transition: transform 0.15s, color 0.15s;
+        }
+
+        .swc-persona:hover .swc-persona__arrow {
+            transform: translateX(2px);
+            color: var(--swc-text-secondary);
+        }
+
+        .swc-persona__arrow svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Blob */
+        .swc-blob-feed {
+            display: flex;
+            flex-direction: column;
+            gap: var(--swc-space-2);
+        }
+
+        .swc-blob {
+            padding: var(--swc-space-3);
+            border-radius: var(--swc-radius-md);
+            background: var(--swc-bg-secondary);
+        }
+
+        .swc-blob__header {
+            display: flex;
+            align-items: center;
+            gap: var(--swc-space-2);
+            margin-bottom: var(--swc-space-2);
+        }
+
+        .swc-blob__icon {
+            font-size: 14px;
+        }
+
+        .swc-blob__title {
+            font-size: 12px;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        .swc-blob__time {
+            font-size: 11px;
+            color: var(--swc-text-faint);
+        }
+
+        .swc-blob__content {
+            font-size: 12px;
+            color: var(--swc-text-secondary);
+            line-height: 1.5;
+        }
+
+        .swc-blob__actions {
+            display: flex;
+            gap: var(--swc-space-2);
+            margin-top: var(--swc-space-3);
+        }
+
+        .swc-blob--suggestion {
+            border-left: 3px solid #3b82f6;
+        }
+
+        .swc-blob--evaluation {
+            border-left: 3px solid var(--swc-accent);
+        }
+
+        /* Stars */
+        .swc-stars {
+            display: flex;
+            gap: 1px;
+        }
+
+        .swc-stars__star {
+            color: var(--swc-text-faint);
+            font-size: 12px;
+        }
+
+        .swc-stars__star--filled {
+            color: #fbbf24;
+        }
+
+        /* Small Button */
+        .swc-btn-sm {
+            padding: 6px 10px;
+            border: 1px solid var(--swc-border-color);
+            border-radius: var(--swc-radius-sm);
+            background: var(--swc-bg-primary);
+            color: var(--swc-text-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .swc-btn-sm:hover {
+            background: var(--swc-bg-tertiary);
+            color: var(--swc-text-primary);
+        }
+
+        .swc-btn-sm--primary {
+            background: var(--swc-accent);
+            border-color: var(--swc-accent);
+            color: white;
+        }
+
+        .swc-btn-sm--primary:hover {
+            background: var(--swc-accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-wrapper">
+        <aside class="sidebar">
+            <div class="swc-companion">
+                
+                <!-- HEADER -->
+                <header class="swc-header">
+                    <div class="swc-header__left">
+                        <span class="swc-header__icon">✏️</span>
+                        <h1 class="swc-header__title">Smart Writing</h1>
+                    </div>
+                    <div class="swc-header__right">
+                        <div class="swc-status-dot" title="Ollama: qwen2.5:7b"></div>
+                        <button class="swc-icon-button" title="Configurações">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- DOCUMENT CARD -->
+                <div class="swc-document-card">
+                    <div class="swc-document-card__filename">
+                        <span class="swc-document-card__icon">📄</span>
+                        <span>capitulo-01.md</span>
+                    </div>
+                    <div class="swc-document-card__stats">12.450 palavras • 62 min leitura</div>
+                </div>
+
+                <!-- READABILITY SECTION -->
+                <section class="swc-section" id="readabilitySection">
+                    <div class="swc-section__header" onclick="toggleSection('readabilitySection')">
+                        <svg class="swc-section__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <span class="swc-section__title">Legibilidade</span>
+                        <span class="swc-section__badge">3</span>
+                    </div>
+                    <div class="swc-section__content">
+                        <div class="swc-meter">
+                            <div class="swc-meter__header">
+                                <span class="swc-meter__label">Flesch-Kincaid</span>
+                                <span class="swc-meter__value">8.2</span>
+                            </div>
+                            <div class="swc-meter__track">
+                                <div class="swc-meter__fill swc-meter__fill--good" style="width: 41%;"></div>
+                            </div>
+                            <div class="swc-meter__hint">Ideal: 7-9</div>
+                        </div>
+
+                        <div class="swc-metric">
+                            <div class="swc-metric__dot swc-metric__dot--good"></div>
+                            <span class="swc-metric__label">Voz passiva</span>
+                            <span class="swc-metric__value">3.2%</span>
+                        </div>
+                        <div class="swc-metric">
+                            <div class="swc-metric__dot swc-metric__dot--ok"></div>
+                            <span class="swc-metric__label">Advérbios</span>
+                            <span class="swc-metric__value">24/1000</span>
+                        </div>
+                        <div class="swc-metric">
+                            <div class="swc-metric__dot swc-metric__dot--bad"></div>
+                            <span class="swc-metric__label">Frases longas</span>
+                            <span class="swc-metric__value">8</span>
+                        </div>
+
+                        <div class="swc-view-all">
+                            <span>Ver todos os alertas</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ACTION GRID -->
+                <div class="swc-actions">
+                    <div class="swc-actions__grid">
+                        <button class="swc-action-btn">
+                            <span class="swc-action-btn__icon">🧹</span>
+                            <span>Limpar</span>
+                        </button>
+                        <button class="swc-action-btn swc-action-btn--primary">
+                            <span class="swc-action-btn__icon">🔍</span>
+                            <span>Analisar</span>
+                        </button>
+                        <button class="swc-action-btn">
+                            <span class="swc-action-btn__icon">🌐</span>
+                            <span>Traduzir</span>
+                        </button>
+                        <button class="swc-action-btn">
+                            <span class="swc-action-btn__icon">📊</span>
+                            <span>Relatório</span>
+                        </button>
+                    </div>
+                    <div class="swc-actions__selection">Seleção: 342 palavras</div>
+                </div>
+
+                <!-- PERSONAS SECTION -->
+                <section class="swc-section" id="personasSection">
+                    <div class="swc-section__header" onclick="toggleSection('personasSection')">
+                        <svg class="swc-section__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <span class="swc-section__title">Personas de Leitores</span>
+                    </div>
+                    <div class="swc-section__content">
+                        <div class="swc-persona">
+                            <span class="swc-persona__icon">📱</span>
+                            <div class="swc-persona__content">
+                                <div class="swc-persona__name">Booktuber</div>
+                                <div class="swc-persona__description">Isso engajaria sua audiência?</div>
+                            </div>
+                            <div class="swc-persona__arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="swc-persona">
+                            <span class="swc-persona__icon">📚</span>
+                            <div class="swc-persona__content">
+                                <div class="swc-persona__name">Leitor Hardcore</div>
+                                <div class="swc-persona__description">O worldbuilding é consistente?</div>
+                            </div>
+                            <div class="swc-persona__arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="swc-persona">
+                            <span class="swc-persona__icon">📖</span>
+                            <div class="swc-persona__content">
+                                <div class="swc-persona__name">Leitor Casual</div>
+                                <div class="swc-persona__description">É uma leitura acessível?</div>
+                            </div>
+                            <div class="swc-persona__arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ACTIVITY SECTION -->
+                <section class="swc-section" id="activitySection">
+                    <div class="swc-section__header" onclick="toggleSection('activitySection')">
+                        <svg class="swc-section__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <span class="swc-section__title">Atividade</span>
+                    </div>
+                    <div class="swc-section__content">
+                        <div class="swc-blob-feed">
+                            <div class="swc-blob swc-blob--suggestion">
+                                <div class="swc-blob__header">
+                                    <span class="swc-blob__icon">💡</span>
+                                    <span class="swc-blob__title">12 sugestões de limpeza</span>
+                                </div>
+                                <div class="swc-blob__content">
+                                    Aspas tipográficas, travessões e espaços duplos.
+                                </div>
+                                <div class="swc-blob__actions">
+                                    <button class="swc-btn-sm swc-btn-sm--primary">Aceitar</button>
+                                    <button class="swc-btn-sm">Rejeitar</button>
+                                </div>
+                            </div>
+
+                            <div class="swc-blob swc-blob--evaluation">
+                                <div class="swc-blob__header">
+                                    <div class="swc-stars">
+                                        <span class="swc-stars__star swc-stars__star--filled">★</span>
+                                        <span class="swc-stars__star swc-stars__star--filled">★</span>
+                                        <span class="swc-stars__star swc-stars__star--filled">★</span>
+                                        <span class="swc-stars__star swc-stars__star--filled">★</span>
+                                        <span class="swc-stars__star">★</span>
+                                    </div>
+                                    <span class="swc-blob__title">Booktuber</span>
+                                    <span class="swc-blob__time">há 5 min</span>
+                                </div>
+                                <div class="swc-blob__content">
+                                    "Ótimo gancho! Compartilharia com certeza."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            document.getElementById(sectionId).classList.toggle('swc-section--collapsed');
+        }
+    </script>
+</body>
+</html>

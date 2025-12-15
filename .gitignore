@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+out/
+*.log
+*.tgz
+
+# Obsidian / local files
+.obsidian/
+.DS_Store
+
+# MacOS
+.DS_Store

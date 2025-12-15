@@ -1,0 +1,26 @@
+{
+	"name": "smart-writing-companion",
+	"version": "0.0.1",
+	"description": "Assistente editorial local-first para autores de ficção no Obsidian",
+	"main": "main.js",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"bump": "node version-bump.mjs",
+		"version": "node version-bump.mjs && git add manifest.json versions.json package.json",
+		"release": "npm run version && git commit -m \"chore(release): bump version\" -a || true && git tag -f v$(node -e \"console.log(require('./package.json').version)\") && git push origin --tags"
+	},
+	"keywords": [],
+	"author": "Zander Catta Preta",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^16.11.6",
+		"@typescript-eslint/eslint-plugin": "5.29.0",
+		"@typescript-eslint/parser": "5.29.0",
+		"builtin-modules": "3.3.0",
+		"esbuild": "0.17.3",
+		"obsidian": "latest",
+		"tslib": "2.4.0",
+		"typescript": "4.7.4"
+	}
+}

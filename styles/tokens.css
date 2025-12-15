@@ -1,0 +1,29 @@
+:root {
+  /* Colors */
+  --swc-bg: var(--background-primary);
+  --swc-bg-secondary: var(--background-secondary);
+  --swc-border: var(--background-modifier-border);
+  --swc-text: var(--text-normal);
+  --swc-text-muted: var(--text-muted);
+  --swc-accent: var(--interactive-accent);
+  --swc-accent-hover: var(--interactive-accent-hover);
+
+  /* Status Colors */
+  --swc-status-good: #22c55e;
+  --swc-status-ok: #eab308;
+  --swc-status-bad: #ef4444;
+
+  /* Spacing */
+  --swc-space-xs: 4px;
+  --swc-space-sm: 8px;
+  --swc-space-md: 16px;
+  --swc-space-lg: 24px;
+
+  /* Typography */
+  --swc-font-ui: var(--font-ui);
+  --swc-font-mono: var(--font-monospace);
+
+  /* Components */
+  --swc-card-bg: var(--background-secondary);
+  --swc-card-radius: 8px;
+}
