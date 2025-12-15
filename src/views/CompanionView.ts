@@ -192,11 +192,11 @@ export class CompanionView extends ItemView {
         }
         
         // Update Metrics
-        this.updateMetric('Voz passiva', `${results.style.passiveVoicePercent.toFixed(1)}%`, 
-            results.style.passiveVoicePercent > this.plugin.settings.analysis.maxPassiveVoicePercent ? 'bad' : 'good');
-            
-        this.updateMetric('Advérbios', `${results.style.adverbsPer1000.toFixed(0)}/1000`, 
-            results.style.adverbsPer1000 > this.plugin.settings.analysis.maxAdverbsPer1000 ? 'ok' : 'good'); // simplistic
+        const passiveStatus = results.style.passiveVoicePercent > this.plugin.settings.analysis.maxPassiveVoicePercent ? 'bad' : 'good';
+        this.updateMetric('Voz passiva', `${results.style.passiveVoicePercent.toFixed(1)}%`, passiveStatus);
+
+        const adverbStatus = results.style.adverbsPer1000 > this.plugin.settings.analysis.maxAdverbsPer1000 ? 'bad' : 'good';
+        this.updateMetric('Advérbios', `${results.style.adverbsPer1000.toFixed(0)}/1000`, adverbStatus);
             
         this.updateMetric('Frases longas', results.style.longSentenceCount.toString(), 
              results.style.longSentenceCount > 0 ? 'bad' : 'good');

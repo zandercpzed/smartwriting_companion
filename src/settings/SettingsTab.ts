@@ -92,6 +92,34 @@ export class SWCSettingTab extends PluginSettingTab {
                     }
                 }));
 
+        new Setting(containerEl)
+            .setName('Max Passive Voice (%)')
+            .setDesc('Maximum percent of passive voice sentences allowed before flagging')
+            .addText(text => text
+                .setPlaceholder('5')
+                .setValue(String(this.plugin.settings.analysis.maxPassiveVoicePercent))
+                .onChange(async (value) => {
+                    const num = parseFloat(value);
+                    if (!isNaN(num)) {
+                        this.plugin.settings.analysis.maxPassiveVoicePercent = num;
+                        await this.plugin.saveSettings();
+                    }
+                }));
+
+        new Setting(containerEl)
+            .setName('Max Adverbs per 1000 words')
+            .setDesc('Flag when adverb frequency exceeds this threshold')
+            .addText(text => text
+                .setPlaceholder('20')
+                .setValue(String(this.plugin.settings.analysis.maxAdverbsPer1000))
+                .onChange(async (value) => {
+                    const num = parseFloat(value);
+                    if (!isNaN(num)) {
+                        this.plugin.settings.analysis.maxAdverbsPer1000 = num;
+                        await this.plugin.saveSettings();
+                    }
+                }));
+
         // Cleanup Settings
         containerEl.createEl('h3', { text: 'Auto-Cleanup' });
 

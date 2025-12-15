@@ -1,6 +1,6 @@
 {
 	"name": "smart-writing-companion",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Assistente editorial local-first para autores de ficção no Obsidian",
 	"main": "main.js",
 	"scripts": {
