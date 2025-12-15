@@ -21,7 +21,7 @@ export class CleanupService {
     public clean(text: string): string {
         // Here we could respect specific settings to selectively disable certain cleanups
         // For now, using the default full clean from the analyzer
-        let cleaned = text;
+        const cleaned = text;
         
         // This logic should ideally be inside TextCleanup.clean taking options, 
         // or we manually orchestration here.

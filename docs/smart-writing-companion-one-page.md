@@ -16,14 +16,15 @@ SmartWriting companion é um plugin para Obsidian que prepara textos de ficção
 
 Autores de ficção (especialmente SF/Fantasy) enfrentam um gap entre escrever e publicar:
 
-| Ferramentas Profissionais | Plugins Obsidian Atuais |
-|---------------------------|-------------------------|
-| ProWritingAid ($120/ano)  | Longform (apenas organização) |
+| Ferramentas Profissionais | Plugins Obsidian Atuais             |
+| ------------------------- | ----------------------------------- |
+| ProWritingAid ($120/ano)  | Longform (apenas organização)       |
 | AutoCrit ($30/mês)        | Writing Goals (apenas estatísticas) |
-| Hemingway ($20 único)     | LanguageTool (apenas gramática) |
-| Scrivener ($60)           | Nenhum focado em ficção |
+| Hemingway ($20 único)     | LanguageTool (apenas gramática)     |
+| Scrivener ($60)           | Nenhum focado em ficção             |
 
 **O gap:** Nenhuma solução combina:
+
 - Limpeza automática de formatação
 - Métricas específicas para ficção
 - Feedback de "leitores" antes de beta readers reais
@@ -74,20 +75,20 @@ Autores de ficção (especialmente SF/Fantasy) enfrentam um gap entre escrever e
 
 ### Tier Gratuito (v1.0)
 
-| Funcionalidade | Descrição | Dependência |
-|----------------|-----------|-------------|
-| **Limpeza de Texto** | Normaliza aspas, travessões, reticências, espaços | Local (regex) |
-| **Estatísticas** | Words, characters, sentences, reading time | Local (JS) |
-| **Legibilidade** | 7 métricas (Flesch-Kincaid, Gunning Fog, etc.) | Local (text-readability) |
-| **Análise de Estilo** | Voz passiva, advérbios, frases longas | Local (compromise) |
-| **Métricas de Ficção** | Ratio diálogo, show vs tell, filter words | Local (regex + NLP) |
+| Funcionalidade         | Descrição                                         | Dependência              |
+| ---------------------- | ------------------------------------------------- | ------------------------ |
+| **Limpeza de Texto**   | Normaliza aspas, travessões, reticências, espaços | Local (regex)            |
+| **Estatísticas**       | Words, characters, sentences, reading time        | Local (JS)               |
+| **Legibilidade**       | 7 métricas (Flesch-Kincaid, Gunning Fog, etc.)    | Local (text-readability) |
+| **Análise de Estilo**  | Voz passiva, advérbios, frases longas             | Local (compromise)       |
+| **Métricas de Ficção** | Ratio diálogo, show vs tell, filter words         | Local (regex + NLP)      |
 
 ### Tier Completo (v1.0 com LLM)
 
-| Funcionalidade | Descrição | Dependência |
-|----------------|-----------|-------------|
-| **Avaliação por Persona** | Feedback de 3 tipos de leitores | LLM (local ou cloud) |
-| **Tradução Contextual** | PT↔EN preservando termos de mundo | LLM (local ou cloud) |
+| Funcionalidade            | Descrição                            | Dependência          |
+| ------------------------- | ------------------------------------ | -------------------- |
+| **Avaliação por Persona** | Feedback de 3 tipos de leitores      | LLM (local ou cloud) |
+| **Tradução Contextual**   | PT↔EN preservando termos de mundo   | LLM (local ou cloud) |
 | **Show vs Tell Avançado** | Identificação de passagens "telling" | LLM (local ou cloud) |
 
 ### Futuro (v2.0+)
@@ -147,16 +148,16 @@ Autores de ficção (especialmente SF/Fantasy) enfrentam um gap entre escrever e
 
 ## Stack Tecnológico
 
-| Camada | Tecnologia | Justificativa |
-|--------|------------|---------------|
-| **Linguagem** | TypeScript | Padrão Obsidian, type-safety |
-| **Build** | esbuild | Rápido, padrão da comunidade |
-| **Legibilidade** | text-readability | 7 métricas, ~15KB |
-| **NLP** | compromise | Browser-first, ~80KB |
-| **Detecção idioma** | tinyld | 99% precisão, ~15KB |
-| **LLM Local** | Ollama | Setup simples, API padrão |
-| **Modelo sugerido** | Qwen 2.5 7B | Melhor multilíngue, Apache 2.0 |
-| **LLM Cloud** | Gemini Flash | Free tier generoso |
+| Camada              | Tecnologia       | Justificativa                  |
+| ------------------- | ---------------- | ------------------------------ |
+| **Linguagem**       | TypeScript       | Padrão Obsidian, type-safety   |
+| **Build**           | esbuild          | Rápido, padrão da comunidade   |
+| **Legibilidade**    | text-readability | 7 métricas, ~15KB              |
+| **NLP**             | compromise       | Browser-first, ~80KB           |
+| **Detecção idioma** | tinyld           | 99% precisão, ~15KB            |
+| **LLM Local**       | Ollama           | Setup simples, API padrão      |
+| **Modelo sugerido** | Qwen 2.5 7B      | Melhor multilíngue, Apache 2.0 |
+| **LLM Cloud**       | Gemini Flash     | Free tier generoso             |
 
 ### Bundle Estimado
 
@@ -234,6 +235,7 @@ Tier Completo (com Ollama):
 **Perfil:** Avalia livros para redes sociais, busca ganchos vendáveis
 
 **Critérios:**
+
 - Hook dos primeiros parágrafos (dá pra vender em 15s?)
 - Cenas "instagramáveis" (visuais marcantes)
 - Quotes para legenda
@@ -244,6 +246,7 @@ Tier Completo (com Ollama):
 **Perfil:** Lê 50+ livros/ano no gênero, fã de Sanderson/Rothfuss
 
 **Critérios:**
+
 - Consistência do worldbuilding
 - Sistema de magia coerente
 - Desenvolvimento de personagens
@@ -254,6 +257,7 @@ Tier Completo (com Ollama):
 **Perfil:** Lê 1-6 livros/ano, prefere histórias acessíveis
 
 **Critérios:**
+
 - Facilidade de acompanhar
 - Personagens relacionáveis
 - Ritmo envolvente
@@ -263,15 +267,15 @@ Tier Completo (com Ollama):
 
 ## Diferenciais Competitivos
 
-| Aspecto | ProWritingAid | AutoCrit | Hemingway | Smart Writing |
-|---------|---------------|----------|-----------|---------------|
-| Preço | $120/ano | $30/mês | $20 único | **Grátis** |
-| Integração Obsidian | ❌ | ❌ | ❌ | **✅ Nativa** |
-| Processamento local | ❌ | ❌ | ❌ | **✅** |
-| Métricas de ficção | ⚠️ Genérico | ✅ | ❌ | **✅ SF/Fantasy** |
-| Feedback de leitores | ❌ | ❌ | ❌ | **✅ 3 personas** |
-| Tradução contextual | ❌ | ❌ | ❌ | **✅** |
-| Offline | ❌ | ❌ | ✅ | **✅** |
+| Aspecto              | ProWritingAid | AutoCrit | Hemingway | Smart Writing     |
+| -------------------- | ------------- | -------- | --------- | ----------------- |
+| Preço                | $120/ano      | $30/mês  | $20 único | **Grátis**        |
+| Integração Obsidian  | ❌            | ❌       | ❌        | **✅ Nativa**     |
+| Processamento local  | ❌            | ❌       | ❌        | **✅**            |
+| Métricas de ficção   | ⚠️ Genérico   | ✅       | ❌        | **✅ SF/Fantasy** |
+| Feedback de leitores | ❌            | ❌       | ❌        | **✅ 3 personas** |
+| Tradução contextual  | ❌            | ❌       | ❌        | **✅**            |
+| Offline              | ❌            | ❌       | ✅        | **✅**            |
 
 ---
 
@@ -304,33 +308,33 @@ Tier Completo (com Ollama):
 
 ### Técnicas
 
-| Métrica | Alvo MVP | Alvo v2.0 |
-|---------|----------|-----------|
-| Análise de 50k palavras | < 500ms | < 200ms |
-| Limpeza de 50k palavras | < 100ms | < 50ms |
-| LLM local (avaliação) | < 5s | < 3s |
-| Bundle size | < 200KB | < 150KB |
+| Métrica                 | Alvo MVP | Alvo v2.0 |
+| ----------------------- | -------- | --------- |
+| Análise de 50k palavras | < 500ms  | < 200ms   |
+| Limpeza de 50k palavras | < 100ms  | < 50ms    |
+| LLM local (avaliação)   | < 5s     | < 3s      |
+| Bundle size             | < 200KB  | < 150KB   |
 
 ### Produto
 
-| Métrica | Alvo 6 meses | Alvo 12 meses |
-|---------|--------------|---------------|
-| Downloads | 2.000 | 15.000 |
-| GitHub Stars | 300 | 1.500 |
-| Usuários ativos semanais | 500 | 5.000 |
-| Rating no Community Plugins | 4.5+ | 4.7+ |
+| Métrica                     | Alvo 6 meses | Alvo 12 meses |
+| --------------------------- | ------------ | ------------- |
+| Downloads                   | 2.000        | 15.000        |
+| GitHub Stars                | 300          | 1.500         |
+| Usuários ativos semanais    | 500          | 5.000         |
+| Rating no Community Plugins | 4.5+         | 4.7+          |
 
 ---
 
 ## Riscos e Mitigações
 
-| Risco | Probabilidade | Impacto | Mitigação |
-|-------|---------------|---------|-----------|
-| Ollama setup complexo para usuários | Alta | Alto | Tier gratuito funciona 100% sem LLM; documentação visual |
-| Qualidade das avaliações por persona | Média | Alto | Prompts refinados; feedback dos usuários; iteração |
-| Conflito com outros plugins de escrita | Média | Médio | API isolada; testes com Longform, Writing Goals |
-| Performance em documentos muito grandes | Baixa | Médio | Processamento em chunks; Web Workers |
-| Precisão da tradução de termos inventados | Média | Médio | Lista de termos customizável por vault |
+| Risco                                     | Probabilidade | Impacto | Mitigação                                                |
+| ----------------------------------------- | ------------- | ------- | -------------------------------------------------------- |
+| Ollama setup complexo para usuários       | Alta          | Alto    | Tier gratuito funciona 100% sem LLM; documentação visual |
+| Qualidade das avaliações por persona      | Média         | Alto    | Prompts refinados; feedback dos usuários; iteração       |
+| Conflito com outros plugins de escrita    | Média         | Médio   | API isolada; testes com Longform, Writing Goals          |
+| Performance em documentos muito grandes   | Baixa         | Médio   | Processamento em chunks; Web Workers                     |
+| Precisão da tradução de termos inventados | Média         | Médio   | Lista de termos customizável por vault                   |
 
 ---
 
@@ -413,21 +417,21 @@ Q3 2025 ────────────────────────
 
 ## Documentos Relacionados
 
-| Documento | Descrição | Localização |
-|-----------|-----------|-------------|
-| Arquitetura Técnica | Detalhamento de componentes e código | `smart-writing-companion-architecture.md` |
-| Especificação de Interface | Layout, componentes, estados | `smart-writing-companion-interface-v2.md` |
-| Pesquisa de Mercado | Benchmark, LLMs, bibliotecas | `smartwriting-companion-research.md` |
+| Documento                  | Descrição                            | Localização                               |
+| -------------------------- | ------------------------------------ | ----------------------------------------- |
+| Arquitetura Técnica        | Detalhamento de componentes e código | `smart-writing-companion-architecture.md` |
+| Especificação de Interface | Layout, componentes, estados         | `smart-writing-companion-interface-v2.md` |
+| Pesquisa de Mercado        | Benchmark, LLMs, bibliotecas         | `smartwriting-companion-research.md`      |
 
 ---
 
 ## Links
 
-| Recurso | URL |
-|---------|-----|
-| **Repositório GitHub** | [github.com/zandercpzed/text_companion](https://github.com/zandercpzed/text_companion) |
-| **Issues** | [github.com/zandercpzed/text_companion/issues](https://github.com/zandercpzed/text_companion/issues) |
-| **Releases** | [github.com/zandercpzed/text_companion/releases](https://github.com/zandercpzed/text_companion/releases) |
+| Recurso                | URL                                                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Repositório GitHub** | [github.com/zandercpzed/text_companion](https://github.com/zandercpzed/text_companion)                   |
+| **Issues**             | [github.com/zandercpzed/text_companion/issues](https://github.com/zandercpzed/text_companion/issues)     |
+| **Releases**           | [github.com/zandercpzed/text_companion/releases](https://github.com/zandercpzed/text_companion/releases) |
 
 ---
 

@@ -56,7 +56,7 @@ export class StatisticsAnalyzer {
 
     private stripMarkdown(text: string): string {
         // Simple markdown stripper
-        let clean = text
+        const clean = text
             // Headers
             .replace(/^#+\s+/gm, '')
             // Bold/Italic

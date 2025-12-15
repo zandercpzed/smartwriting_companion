@@ -155,24 +155,15 @@ var CompanionView = class extends import_obsidian2.ItemView {
                         <span class="swc-header__icon">\u270F\uFE0F</span>
                         <h1 class="swc-header__title">Smart Writing</h1>
                     </div>
-                    <div class="swc-header__right">
-                        <div class="swc-status-dot" title="Ollama: qwen2.5:7b"></div>
-                        <button class="swc-icon-button" title="Configura\xE7\xF5es">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
-                        </button>
-                    </div>
                 </header>
 
                 <!-- DOCUMENT CARD -->
                 <div class="swc-document-card">
                     <div class="swc-document-card__filename">
                         <span class="swc-document-card__icon">\u{1F4C4}</span>
-                        <span>capitulo-01.md</span>
+                        <span>--</span>
                     </div>
-                    <div class="swc-document-card__stats">12.450 palavras \u2022 62 min leitura</div>
+                    <div class="swc-document-card__stats">-</div>
                 </div>
 
                 <!-- READABILITY SECTION -->
@@ -182,41 +173,34 @@ var CompanionView = class extends import_obsidian2.ItemView {
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                         <span class="swc-section__title">Legibilidade</span>
-                        <span class="swc-section__badge">3</span>
+                        <span class="swc-section__badge">-</span>
                     </div>
                     <div class="swc-section__content">
                         <div class="swc-meter">
                             <div class="swc-meter__header">
                                 <span class="swc-meter__label">Flesch-Kincaid</span>
-                                <span class="swc-meter__value">8.2</span>
+                                <span class="swc-meter__value">-</span>
                             </div>
                             <div class="swc-meter__track">
-                                <div class="swc-meter__fill swc-meter__fill--good" style="width: 41%;"></div>
+                                <div class="swc-meter__fill" style="width: 0%;"></div>
                             </div>
                             <div class="swc-meter__hint">Ideal: 7-9</div>
                         </div>
 
                         <div class="swc-metric">
-                            <div class="swc-metric__dot swc-metric__dot--good"></div>
+                            <div class="swc-metric__dot"></div>
                             <span class="swc-metric__label">Voz passiva</span>
-                            <span class="swc-metric__value">3.2%</span>
+                            <span class="swc-metric__value">-</span>
                         </div>
                         <div class="swc-metric">
-                            <div class="swc-metric__dot swc-metric__dot--ok"></div>
+                            <div class="swc-metric__dot"></div>
                             <span class="swc-metric__label">Adv\xE9rbios</span>
-                            <span class="swc-metric__value">24/1000</span>
+                            <span class="swc-metric__value">-</span>
                         </div>
                         <div class="swc-metric">
-                            <div class="swc-metric__dot swc-metric__dot--bad"></div>
+                            <div class="swc-metric__dot"></div>
                             <span class="swc-metric__label">Frases longas</span>
-                            <span class="swc-metric__value">8</span>
-                        </div>
-
-                        <div class="swc-view-all">
-                            <span>Ver todos os alertas</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
+                            <span class="swc-metric__value">-</span>
                         </div>
                     </div>
                 </section>
@@ -224,117 +208,12 @@ var CompanionView = class extends import_obsidian2.ItemView {
                 <!-- ACTION GRID -->
                 <div class="swc-actions">
                     <div class="swc-actions__grid">
-                        <button class="swc-action-btn">
-                            <span class="swc-action-btn__icon">\u{1F9F9}</span>
-                            <span>Limpar</span>
-                        </button>
                         <button class="swc-action-btn swc-action-btn--primary">
                             <span class="swc-action-btn__icon">\u{1F50D}</span>
-                            <span>Analisar</span>
-                        </button>
-                        <button class="swc-action-btn">
-                            <span class="swc-action-btn__icon">\u{1F310}</span>
-                            <span>Traduzir</span>
-                        </button>
-                        <button class="swc-action-btn">
-                            <span class="swc-action-btn__icon">\u{1F4CA}</span>
-                            <span>Relat\xF3rio</span>
+                            <span>Analisar Agora</span>
                         </button>
                     </div>
-                    <div class="swc-actions__selection">Sele\xE7\xE3o: 342 palavras</div>
                 </div>
-
-                <!-- PERSONAS SECTION -->
-                <section class="swc-section" id="personasSection">
-                    <div class="swc-section__header" data-section="personasSection">
-                        <svg class="swc-section__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                        <span class="swc-section__title">Personas de Leitores</span>
-                    </div>
-                    <div class="swc-section__content">
-                        <div class="swc-persona">
-                            <span class="swc-persona__icon">\u{1F4F1}</span>
-                            <div class="swc-persona__content">
-                                <div class="swc-persona__name">Booktuber</div>
-                                <div class="swc-persona__description">Isso engajaria sua audi\xEAncia?</div>
-                            </div>
-                            <div class="swc-persona__arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="swc-persona">
-                            <span class="swc-persona__icon">\u{1F4DA}</span>
-                            <div class="swc-persona__content">
-                                <div class="swc-persona__name">Leitor Hardcore</div>
-                                <div class="swc-persona__description">O worldbuilding \xE9 consistente?</div>
-                            </div>
-                            <div class="swc-persona__arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="swc-persona">
-                            <span class="swc-persona__icon">\u{1F4D6}</span>
-                            <div class="swc-persona__content">
-                                <div class="swc-persona__name">Leitor Casual</div>
-                                <div class="swc-persona__description">\xC9 uma leitura acess\xEDvel?</div>
-                            </div>
-                            <div class="swc-persona__arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ACTIVITY SECTION -->
-                <section class="swc-section" id="activitySection">
-                    <div class="swc-section__header" data-section="activitySection">
-                        <svg class="swc-section__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                        <span class="swc-section__title">Atividade</span>
-                    </div>
-                    <div class="swc-section__content">
-                        <div class="swc-blob-feed">
-                            <div class="swc-blob swc-blob--suggestion">
-                                <div class="swc-blob__header">
-                                    <span class="swc-blob__icon">\u{1F4A1}</span>
-                                    <span class="swc-blob__title">12 sugest\xF5es de limpeza</span>
-                                </div>
-                                <div class="swc-blob__content">
-                                    Aspas tipogr\xE1ficas, travess\xF5es e espa\xE7os duplos.
-                                </div>
-                                <div class="swc-blob__actions">
-                                    <button class="swc-btn-sm swc-btn-sm--primary">Aceitar</button>
-                                    <button class="swc-btn-sm">Rejeitar</button>
-                                </div>
-                            </div>
-
-                            <div class="swc-blob swc-blob--evaluation">
-                                <div class="swc-blob__header">
-                                    <div class="swc-stars">
-                                        <span class="swc-stars__star swc-stars__star--filled">\u2605</span>
-                                        <span class="swc-stars__star swc-stars__star--filled">\u2605</span>
-                                        <span class="swc-stars__star swc-stars__star--filled">\u2605</span>
-                                        <span class="swc-stars__star swc-stars__star--filled">\u2605</span>
-                                        <span class="swc-stars__star">\u2605</span>
-                                    </div>
-                                    <span class="swc-blob__title">Booktuber</span>
-                                    <span class="swc-blob__time">h\xE1 5 min</span>
-                                </div>
-                                <div class="swc-blob__content">
-                                    "\xD3timo gancho! Compartilharia com certeza."
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
             </div>
         </aside>
@@ -466,7 +345,7 @@ var StatisticsAnalyzer = class {
     return Math.ceil(words / 200);
   }
   stripMarkdown(text) {
-    let clean = text.replace(/^#+\s+/gm, "").replace(/(\*\*|__)(.*?)\1/g, "$2").replace(/(\*|_)(.*?)\1/g, "$2").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/!\[([^\]]*)\]\([^)]+\)/g, "").replace(/^>\s+/gm, "").replace(/```[\s\S]*?```/g, "").replace(/`([^`]+)`/g, "$1");
+    const clean = text.replace(/^#+\s+/gm, "").replace(/(\*\*|__)(.*?)\1/g, "$2").replace(/(\*|_)(.*?)\1/g, "$2").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/!\[([^\]]*)\]\([^)]+\)/g, "").replace(/^>\s+/gm, "").replace(/```[\s\S]*?```/g, "").replace(/`([^`]+)`/g, "$1");
     return clean;
   }
 };
@@ -842,7 +721,7 @@ var CleanupService = class {
     return this.textCleanup.analyze(text);
   }
   clean(text) {
-    let cleaned = text;
+    const cleaned = text;
     return this.textCleanup.clean(text);
   }
   applySuggestion(text, suggestion) {

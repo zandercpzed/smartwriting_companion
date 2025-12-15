@@ -58,14 +58,14 @@ O SmartWriting companion é estruturado em **camadas desacopladas** que se comun
 
 ### Ambiente de Execução
 
-| Aspecto | Restrição | Impacto na Arquitetura |
-|---------|-----------|------------------------|
-| **Runtime** | Electron (Chromium sandbox) | Sem acesso direto a filesystem nativo; usar Vault API |
-| **Módulos Node** | Limitados no renderer | Bibliotecas devem ser browser-compatible |
-| **CORS** | Bloqueado para fetch() | Usar `requestUrl()` do Obsidian para HTTP externo |
-| **Workers** | Web Workers disponíveis | Processamento pesado pode usar workers |
-| **Tamanho do bundle** | Não há limite oficial, mas < 5MB recomendado | Lazy loading para módulos pesados |
-| **Startup time** | Plugins lentos degradam UX | Inicialização assíncrona, defer não-críticos |
+| Aspecto               | Restrição                                    | Impacto na Arquitetura                                |
+| --------------------- | -------------------------------------------- | ----------------------------------------------------- |
+| **Runtime**           | Electron (Chromium sandbox)                  | Sem acesso direto a filesystem nativo; usar Vault API |
+| **Módulos Node**      | Limitados no renderer                        | Bibliotecas devem ser browser-compatible              |
+| **CORS**              | Bloqueado para fetch()                       | Usar `requestUrl()` do Obsidian para HTTP externo     |
+| **Workers**           | Web Workers disponíveis                      | Processamento pesado pode usar workers                |
+| **Tamanho do bundle** | Não há limite oficial, mas < 5MB recomendado | Lazy loading para módulos pesados                     |
+| **Startup time**      | Plugins lentos degradam UX                   | Inicialização assíncrona, defer não-críticos          |
 
 ### APIs Disponíveis
 
@@ -106,29 +106,30 @@ Plugin.registerView()
 
 ```typescript
 export default class SmartWritingCompanionPlugin extends Plugin {
-    settings: SmartWritingCompanionSettings;
-    orchestrator: Orchestrator;
-    
+    settings: SmartWritingCompanionSettings
+    orchestrator: Orchestrator
+
     async onload() {
-        await this.loadSettings();
-        
+        await this.loadSettings()
+
         // Inicializa serviços
-        this.orchestrator = new Orchestrator(this);
-        
+        this.orchestrator = new Orchestrator(this)
+
         // Registra UI
-        this.registerView(VIEW_TYPE_COMPANION, (leaf) => 
-            new CompanionView(leaf, this.orchestrator)
-        );
-        
+        this.registerView(
+            VIEW_TYPE_COMPANION,
+            (leaf) => new CompanionView(leaf, this.orchestrator)
+        )
+
         // Registra comandos
-        this.registerCommands();
-        
+        this.registerCommands()
+
         // Settings tab
-        this.addSettingTab(new SettingsTab(this.app, this));
+        this.addSettingTab(new SettingsTab(this.app, this))
     }
-    
+
     async onunload() {
-        await this.orchestrator.dispose();
+        await this.orchestrator.dispose()
     }
 }
 ```
@@ -139,24 +140,27 @@ export default class SmartWritingCompanionPlugin extends Plugin {
 
 ```typescript
 interface OrchestratorState {
-    isProcessing: boolean;
-    currentDocument: TFile | null;
-    lastAnalysis: AnalysisResult | null;
-    llmStatus: 'local' | 'cloud' | 'offline';
+    isProcessing: boolean
+    currentDocument: TFile | null
+    lastAnalysis: AnalysisResult | null
+    llmStatus: 'local' | 'cloud' | 'offline'
 }
 
 class Orchestrator extends EventEmitter {
-    private state: OrchestratorState;
-    private analysisService: AnalysisService;
-    private cleanupService: CleanupService;
-    private translationService: TranslationService;
-    private llmGateway: LLMGateway;
-    
+    private state: OrchestratorState
+    private analysisService: AnalysisService
+    private cleanupService: CleanupService
+    private translationService: TranslationService
+    private llmGateway: LLMGateway
+
     // Fluxos principais
-    async analyzeDocument(file: TFile): Promise<AnalysisResult>;
-    async cleanupText(text: string, options: CleanupOptions): Promise<string>;
-    async translateText(text: string, from: string, to: string): Promise<string>;
-    async evaluateAsPersona(text: string, persona: PersonaType): Promise<Evaluation>;
+    async analyzeDocument(file: TFile): Promise<AnalysisResult>
+    async cleanupText(text: string, options: CleanupOptions): Promise<string>
+    async translateText(text: string, from: string, to: string): Promise<string>
+    async evaluateAsPersona(
+        text: string,
+        persona: PersonaType
+    ): Promise<Evaluation>
 }
 ```
 
@@ -221,40 +225,40 @@ class Orchestrator extends EventEmitter {
 ```typescript
 interface AnalysisResult {
     statistics: {
-        words: number;
-        characters: number;
-        sentences: number;
-        paragraphs: number;
-        readingTime: number; // minutos
-    };
+        words: number
+        characters: number
+        sentences: number
+        paragraphs: number
+        readingTime: number // minutos
+    }
     readability: {
-        fleschKincaid: number;
-        fleschReadingEase: number;
-        gunningFog: number;
-        smog: number;
-        colemanLiau: number;
-        automatedReadability: number;
-    };
+        fleschKincaid: number
+        fleschReadingEase: number
+        gunningFog: number
+        smog: number
+        colemanLiau: number
+        automatedReadability: number
+    }
     style: {
-        passiveVoice: StyleIssue[];
-        adverbs: StyleIssue[];
-        weakWords: StyleIssue[];
-        longSentences: StyleIssue[];
-        longParagraphs: StyleIssue[];
-        repetitions: StyleIssue[];
-    };
+        passiveVoice: StyleIssue[]
+        adverbs: StyleIssue[]
+        weakWords: StyleIssue[]
+        longSentences: StyleIssue[]
+        longParagraphs: StyleIssue[]
+        repetitions: StyleIssue[]
+    }
     fiction: {
-        dialogueRatio: number;
-        showVsTell: StyleIssue[];
-        filterWords: StyleIssue[];
-    };
+        dialogueRatio: number
+        showVsTell: StyleIssue[]
+        filterWords: StyleIssue[]
+    }
 }
 
 interface StyleIssue {
-    text: string;
-    position: { line: number; ch: number };
-    severity: 'info' | 'warning' | 'error';
-    suggestion?: string;
+    text: string
+    position: { line: number; ch: number }
+    severity: 'info' | 'warning' | 'error'
+    suggestion?: string
 }
 ```
 
@@ -275,35 +279,35 @@ AnalysisService/
 
 ```typescript
 interface CleanupOptions {
-    normalizeQuotes: boolean;      // Aspas tipográficas
-    normalizeWhitespace: boolean;  // Espaços múltiplos
-    normalizeDashes: boolean;      // Travessões
-    normalizeEllipsis: boolean;    // Reticências
-    removeControlChars: boolean;   // Caracteres invisíveis
-    fixLineBreaks: boolean;        // Quebras de linha
-    preserveMarkdown: boolean;     // Manter sintaxe MD
+    normalizeQuotes: boolean // Aspas tipográficas
+    normalizeWhitespace: boolean // Espaços múltiplos
+    normalizeDashes: boolean // Travessões
+    normalizeEllipsis: boolean // Reticências
+    removeControlChars: boolean // Caracteres invisíveis
+    fixLineBreaks: boolean // Quebras de linha
+    preserveMarkdown: boolean // Manter sintaxe MD
 }
 
 interface CleanupResult {
-    cleanedText: string;
-    changes: CleanupChange[];
+    cleanedText: string
+    changes: CleanupChange[]
     stats: {
-        totalChanges: number;
-        byCategory: Record<string, number>;
-    };
+        totalChanges: number
+        byCategory: Record<string, number>
+    }
 }
 ```
 
 **Transformações:**
 
-| Entrada | Saída | Categoria |
-|---------|-------|-----------|
-| `"texto"` | `"texto"` | normalizeQuotes |
-| `--` | `—` | normalizeDashes |
-| `...` | `…` | normalizeEllipsis |
-| `\r\n` | `\n` | fixLineBreaks |
+| Entrada          | Saída       | Categoria           |
+| ---------------- | ----------- | ------------------- |
+| `"texto"`        | `"texto"`   | normalizeQuotes     |
+| `--`             | `—`         | normalizeDashes     |
+| `...`            | `…`         | normalizeEllipsis   |
+| `\r\n`           | `\n`        | fixLineBreaks       |
 | `  ` (múltiplos) | ` ` (único) | normalizeWhitespace |
-| `\u0000-\u001F` | (remove) | removeControlChars |
+| `\u0000-\u001F`  | (remove)    | removeControlChars  |
 
 ### 6. Translation Service (`services/TranslationService.ts`)
 
@@ -311,19 +315,19 @@ interface CleanupResult {
 
 ```typescript
 interface TranslationOptions {
-    from: string;           // Código ISO (auto-detect se vazio)
-    to: string;             // Código ISO
-    preserveTerms: string[]; // Termos a não traduzir
-    preserveNames: boolean;  // Detectar e preservar nomes próprios
-    preserveQuotes: boolean; // Manter citações no original
-    useLocal: boolean;       // Forçar modelo local
+    from: string // Código ISO (auto-detect se vazio)
+    to: string // Código ISO
+    preserveTerms: string[] // Termos a não traduzir
+    preserveNames: boolean // Detectar e preservar nomes próprios
+    preserveQuotes: boolean // Manter citações no original
+    useLocal: boolean // Forçar modelo local
 }
 
 interface TranslationResult {
-    translatedText: string;
-    detectedLanguage?: string;
-    preservedTerms: string[];
-    confidence: number;
+    translatedText: string
+    detectedLanguage?: string
+    preservedTerms: string[]
+    confidence: number
 }
 ```
 
@@ -345,21 +349,21 @@ interface TranslationResult {
 **Responsabilidade:** Avaliações sob perspectiva de personas leitoras.
 
 ```typescript
-type PersonaType = 'booktuber' | 'hardcore-reader' | 'casual-reader';
+type PersonaType = 'booktuber' | 'hardcore-reader' | 'casual-reader'
 
 interface PersonaEvaluation {
-    persona: PersonaType;
-    score: number;           // 1-5
-    summary: string;         // Veredicto em uma frase
-    strengths: string[];
-    weaknesses: string[];
-    questions: PersonaQuestion[];
-    recommendation: string;
+    persona: PersonaType
+    score: number // 1-5
+    summary: string // Veredicto em uma frase
+    strengths: string[]
+    weaknesses: string[]
+    questions: PersonaQuestion[]
+    recommendation: string
 }
 
 interface PersonaQuestion {
-    question: string;
-    answer: string;
+    question: string
+    answer: string
 }
 ```
 
@@ -373,34 +377,34 @@ interface PersonaQuestion {
 
 ```typescript
 interface LLMProvider {
-    id: string;
-    name: string;
-    type: 'local' | 'cloud';
-    isAvailable(): Promise<boolean>;
-    complete(prompt: string, options: CompletionOptions): Promise<string>;
-    stream(prompt: string, options: CompletionOptions): AsyncGenerator<string>;
+    id: string
+    name: string
+    type: 'local' | 'cloud'
+    isAvailable(): Promise<boolean>
+    complete(prompt: string, options: CompletionOptions): Promise<string>
+    stream(prompt: string, options: CompletionOptions): AsyncGenerator<string>
 }
 
 interface CompletionOptions {
-    maxTokens?: number;
-    temperature?: number;
-    systemPrompt?: string;
-    stopSequences?: string[];
+    maxTokens?: number
+    temperature?: number
+    systemPrompt?: string
+    stopSequences?: string[]
 }
 
 class LLMGateway {
-    private providers: Map<string, LLMProvider>;
-    private preferredOrder: string[];
-    private cache: LRUCache<string, string>;
-    
+    private providers: Map<string, LLMProvider>
+    private preferredOrder: string[]
+    private cache: LRUCache<string, string>
+
     // Tenta providers em ordem de preferência
-    async complete(prompt: string, options?: CompletionOptions): Promise<string>;
-    
+    async complete(prompt: string, options?: CompletionOptions): Promise<string>
+
     // Verifica status de conexão
-    async checkStatus(): Promise<LLMStatus>;
-    
+    async checkStatus(): Promise<LLMStatus>
+
     // Registra novo provider
-    registerProvider(provider: LLMProvider): void;
+    registerProvider(provider: LLMProvider): void
 }
 ```
 
@@ -410,26 +414,29 @@ class LLMGateway {
 
 ```typescript
 class OllamaProvider implements LLMProvider {
-    id = 'ollama';
-    name = 'Ollama (Local)';
-    type = 'local' as const;
-    
-    private baseUrl = 'http://127.0.0.1:11434';
-    private model: string; // Configurável: qwen2.5:7b, llama3.1:8b, etc.
-    
+    id = 'ollama'
+    name = 'Ollama (Local)'
+    type = 'local' as const
+
+    private baseUrl = 'http://127.0.0.1:11434'
+    private model: string // Configurável: qwen2.5:7b, llama3.1:8b, etc.
+
     async isAvailable(): Promise<boolean> {
         try {
             const response = await requestUrl({
                 url: `${this.baseUrl}/api/tags`,
-                method: 'GET'
-            });
-            return response.status === 200;
+                method: 'GET',
+            })
+            return response.status === 200
         } catch {
-            return false;
+            return false
         }
     }
-    
-    async complete(prompt: string, options: CompletionOptions): Promise<string> {
+
+    async complete(
+        prompt: string,
+        options: CompletionOptions
+    ): Promise<string> {
         const response = await requestUrl({
             url: `${this.baseUrl}/api/generate`,
             method: 'POST',
@@ -439,11 +446,11 @@ class OllamaProvider implements LLMProvider {
                 stream: false,
                 options: {
                     num_predict: options.maxTokens ?? 2048,
-                    temperature: options.temperature ?? 0.7
-                }
-            })
-        });
-        return response.json.response;
+                    temperature: options.temperature ?? 0.7,
+                },
+            }),
+        })
+        return response.json.response
     }
 }
 ```
@@ -452,30 +459,33 @@ class OllamaProvider implements LLMProvider {
 
 ```typescript
 class GeminiProvider implements LLMProvider {
-    id = 'gemini';
-    name = 'Google Gemini';
-    type = 'cloud' as const;
-    
-    private apiKey: string;
-    private model = 'gemini-2.5-flash';
-    
-    async complete(prompt: string, options: CompletionOptions): Promise<string> {
+    id = 'gemini'
+    name = 'Google Gemini'
+    type = 'cloud' as const
+
+    private apiKey: string
+    private model = 'gemini-2.5-flash'
+
+    async complete(
+        prompt: string,
+        options: CompletionOptions
+    ): Promise<string> {
         const response = await requestUrl({
             url: `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent`,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-goog-api-key': this.apiKey
+                'x-goog-api-key': this.apiKey,
             },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
                 generationConfig: {
                     maxOutputTokens: options.maxTokens ?? 2048,
-                    temperature: options.temperature ?? 0.7
-                }
-            })
-        });
-        return response.json.candidates[0].content.parts[0].text;
+                    temperature: options.temperature ?? 0.7,
+                },
+            }),
+        })
+        return response.json.candidates[0].content.parts[0].text
     }
 }
 ```
@@ -495,7 +505,7 @@ Módulos que rodam **100% localmente** sem dependência de LLM.
 **Dependências:** `text-readability`
 
 ```typescript
-import * as readability from 'text-readability';
+import * as readability from 'text-readability'
 
 class ReadabilityAnalyzer {
     analyze(text: string): ReadabilityMetrics {
@@ -506,16 +516,16 @@ class ReadabilityAnalyzer {
             smog: readability.smogIndex(text),
             colemanLiau: readability.colemanLiauIndex(text),
             automatedReadability: readability.automatedReadabilityIndex(text),
-            daleChall: readability.daleChallReadabilityScore(text)
-        };
+            daleChall: readability.daleChallReadabilityScore(text),
+        }
     }
-    
+
     getGradeLevel(metrics: ReadabilityMetrics): string {
-        const avg = (metrics.fleschKincaid + metrics.gunningFog) / 2;
-        if (avg <= 6) return 'Elementar';
-        if (avg <= 9) return 'Intermediário';
-        if (avg <= 12) return 'Avançado';
-        return 'Acadêmico';
+        const avg = (metrics.fleschKincaid + metrics.gunningFog) / 2
+        if (avg <= 6) return 'Elementar'
+        if (avg <= 9) return 'Intermediário'
+        if (avg <= 12) return 'Avançado'
+        return 'Acadêmico'
     }
 }
 ```
@@ -525,55 +535,62 @@ class ReadabilityAnalyzer {
 **Dependências:** `compromise`
 
 ```typescript
-import nlp from 'compromise';
+import nlp from 'compromise'
 
 class StyleAnalyzer {
     // Detecta voz passiva
     findPassiveVoice(text: string): StyleIssue[] {
-        const doc = nlp(text);
-        const passives = doc.sentences().filter(s => s.has('#Passive'));
-        return passives.map(p => ({
+        const doc = nlp(text)
+        const passives = doc.sentences().filter((s) => s.has('#Passive'))
+        return passives.map((p) => ({
             text: p.text(),
             position: this.getPosition(text, p.text()),
             severity: 'warning',
-            suggestion: 'Considere reescrever em voz ativa'
-        }));
+            suggestion: 'Considere reescrever em voz ativa',
+        }))
     }
-    
+
     // Detecta advérbios em -mente
     findAdverbs(text: string): StyleIssue[] {
-        const doc = nlp(text);
-        const adverbs = doc.adverbs().out('array');
+        const doc = nlp(text)
+        const adverbs = doc.adverbs().out('array')
         return adverbs
-            .filter(adv => adv.endsWith('mente') || adv.endsWith('ly'))
-            .map(adv => ({
+            .filter((adv) => adv.endsWith('mente') || adv.endsWith('ly'))
+            .map((adv) => ({
                 text: adv,
                 position: this.getPosition(text, adv),
                 severity: 'info',
-                suggestion: 'Advérbios enfraquecem a prosa'
-            }));
+                suggestion: 'Advérbios enfraquecem a prosa',
+            }))
     }
-    
+
     // Detecta palavras-filtro (ficção)
     findFilterWords(text: string): StyleIssue[] {
         const filterWords = [
-            'viu', 'ouviu', 'sentiu', 'percebeu', 'notou',
-            'pensou', 'soube', 'imaginou', 'lembrou'
-        ];
+            'viu',
+            'ouviu',
+            'sentiu',
+            'percebeu',
+            'notou',
+            'pensou',
+            'soube',
+            'imaginou',
+            'lembrou',
+        ]
         // ... implementação
     }
-    
+
     // Detecta frases longas
     findLongSentences(text: string, maxWords = 40): StyleIssue[] {
-        const sentences = text.split(/[.!?]+/);
+        const sentences = text.split(/[.!?]+/)
         return sentences
-            .filter(s => s.split(/\s+/).length > maxWords)
-            .map(s => ({
+            .filter((s) => s.split(/\s+/).length > maxWords)
+            .map((s) => ({
                 text: s.trim(),
                 position: this.getPosition(text, s),
                 severity: 'warning',
-                suggestion: `Frase com ${s.split(/\s+/).length} palavras. Considere dividir.`
-            }));
+                suggestion: `Frase com ${s.split(/\s+/).length} palavras. Considere dividir.`,
+            }))
     }
 }
 ```
@@ -588,26 +605,26 @@ class TextCleanup {
         // Aspas tipográficas
         { pattern: /"([^"]+)"/g, replacement: '"$1"', category: 'quotes' },
         { pattern: /'([^']+)'/g, replacement: ''$1'', category: 'quotes' },
-        
+
         // Travessões
         { pattern: /--/g, replacement: '—', category: 'dashes' },
         { pattern: / - /g, replacement: ' — ', category: 'dashes' },
-        
+
         // Reticências
         { pattern: /\.{3,}/g, replacement: '…', category: 'ellipsis' },
-        
+
         // Espaços
         { pattern: /[ \t]+/g, replacement: ' ', category: 'whitespace' },
         { pattern: /\n{3,}/g, replacement: '\n\n', category: 'whitespace' },
-        
+
         // Caracteres de controle
         { pattern: /[\x00-\x08\x0B\x0C\x0E-\x1F]/g, replacement: '', category: 'control' }
     ];
-    
+
     cleanup(text: string, options: CleanupOptions): CleanupResult {
         let result = text;
         const changes: CleanupChange[] = [];
-        
+
         for (const rule of this.rules) {
             if (this.isRuleEnabled(rule, options)) {
                 const matches = result.matchAll(rule.pattern);
@@ -622,7 +639,7 @@ class TextCleanup {
                 result = result.replace(rule.pattern, rule.replacement);
             }
         }
-        
+
         return { cleanedText: result, changes, stats: this.computeStats(changes) };
     }
 }
@@ -848,36 +865,36 @@ const COMMANDS = [
     { id: 'analyze-selection', name: 'Analisar seleção' },
     { id: 'translate-to-pt', name: 'Traduzir para português' },
     { id: 'translate-to-en', name: 'Traduzir para inglês' },
-    
+
     // Personas
     { id: 'evaluate-booktuber', name: 'Avaliar como Booktuber' },
     { id: 'evaluate-hardcore', name: 'Avaliar como Leitor Contumaz' },
     { id: 'evaluate-casual', name: 'Avaliar como Leitor Casual' },
-    
+
     // UI
     { id: 'open-companion', name: 'Abrir painel companion' },
     { id: 'toggle-companion', name: 'Alternar painel companion' },
-    
+
     // Sugestões
     { id: 'accept-all-suggestions', name: 'Aceitar todas as sugestões' },
     { id: 'reject-all-suggestions', name: 'Rejeitar todas as sugestões' },
     { id: 'next-suggestion', name: 'Próxima sugestão' },
     { id: 'prev-suggestion', name: 'Sugestão anterior' },
-    
+
     // Sistema
     { id: 'check-llm-connection', name: 'Verificar conexão LLM' },
-];
+]
 ```
 
 ### Atalhos de Teclado Padrão
 
-| Comando | Atalho Sugerido |
-|---------|-----------------|
-| Abrir painel | `Cmd/Ctrl+Shift+W` |
-| Limpar seleção/documento | `Cmd/Ctrl+Shift+C` |
-| Próxima sugestão | `Tab` (quando há sugestões) |
-| Aceitar sugestão | `Enter` (quando focado) |
-| Rejeitar sugestão | `Backspace` (quando focado) |
+| Comando                  | Atalho Sugerido             |
+| ------------------------ | --------------------------- |
+| Abrir painel             | `Cmd/Ctrl+Shift+W`          |
+| Limpar seleção/documento | `Cmd/Ctrl+Shift+C`          |
+| Próxima sugestão         | `Tab` (quando há sugestões) |
+| Aceitar sugestão         | `Enter` (quando focado)     |
+| Rejeitar sugestão        | `Backspace` (quando focado) |
 
 ---
 
@@ -889,50 +906,50 @@ const COMMANDS = [
 interface SmartWritingCompanionSettings {
     // LLM
     llm: {
-        preferLocal: boolean;
-        ollamaModel: string;
-        ollamaUrl: string;
-        geminiApiKey: string;
-        openaiApiKey: string;
-        defaultProvider: 'ollama' | 'gemini' | 'openai' | 'auto';
-    };
-    
+        preferLocal: boolean
+        ollamaModel: string
+        ollamaUrl: string
+        geminiApiKey: string
+        openaiApiKey: string
+        defaultProvider: 'ollama' | 'gemini' | 'openai' | 'auto'
+    }
+
     // Análise
     analysis: {
-        autoAnalyze: boolean;           // Analisar ao abrir arquivo
-        analysisDelay: number;          // Debounce em ms
-        showInStatusBar: boolean;
-        
+        autoAnalyze: boolean // Analisar ao abrir arquivo
+        analysisDelay: number // Debounce em ms
+        showInStatusBar: boolean
+
         // Thresholds (SF/Fantasy defaults)
-        maxSentenceLength: number;      // 40
-        maxParagraphLength: number;     // 300
-        targetFleschKincaid: number;    // 7-9
-        targetPassiveVoice: number;     // 5%
-    };
-    
+        maxSentenceLength: number // 40
+        maxParagraphLength: number // 300
+        targetFleschKincaid: number // 7-9
+        targetPassiveVoice: number // 5%
+    }
+
     // Limpeza
     cleanup: {
-        normalizeQuotes: boolean;
-        normalizeDashes: boolean;
-        normalizeEllipsis: boolean;
-        normalizeWhitespace: boolean;
-        preserveMarkdown: boolean;
-    };
-    
+        normalizeQuotes: boolean
+        normalizeDashes: boolean
+        normalizeEllipsis: boolean
+        normalizeWhitespace: boolean
+        preserveMarkdown: boolean
+    }
+
     // Tradução
     translation: {
-        defaultSourceLang: string;
-        defaultTargetLang: string;
-        preserveNames: boolean;
-        customTerms: string[];
-    };
-    
+        defaultSourceLang: string
+        defaultTargetLang: string
+        preserveNames: boolean
+        customTerms: string[]
+    }
+
     // UI
     ui: {
-        sidebarPosition: 'left' | 'right';
-        defaultView: 'metrics' | 'alerts' | 'full';
-        theme: 'auto' | 'light' | 'dark';
-    };
+        sidebarPosition: 'left' | 'right'
+        defaultView: 'metrics' | 'alerts' | 'full'
+        theme: 'auto' | 'light' | 'dark'
+    }
 }
 ```
 
@@ -941,27 +958,30 @@ interface SmartWritingCompanionSettings {
 ```typescript
 interface SessionState {
     // Status atual
-    isProcessing: boolean;
-    processingTask: 'analysis' | 'cleanup' | 'translation' | 'persona' | null;
-    progress: number; // 0-100
-    
+    isProcessing: boolean
+    processingTask: 'analysis' | 'cleanup' | 'translation' | 'persona' | null
+    progress: number // 0-100
+
     // Cache de análise (por arquivo)
-    analysisCache: Map<string, {
-        result: AnalysisResult;
-        timestamp: number;
-        hash: string; // Hash do conteúdo
-    }>;
-    
+    analysisCache: Map<
+        string,
+        {
+            result: AnalysisResult
+            timestamp: number
+            hash: string // Hash do conteúdo
+        }
+    >
+
     // LLM status
     llmStatus: {
-        ollama: 'connected' | 'disconnected' | 'checking';
-        gemini: 'ready' | 'no-key' | 'error';
-        openai: 'ready' | 'no-key' | 'error';
-    };
-    
+        ollama: 'connected' | 'disconnected' | 'checking'
+        gemini: 'ready' | 'no-key' | 'error'
+        openai: 'ready' | 'no-key' | 'error'
+    }
+
     // Último documento analisado
-    currentFile: TFile | null;
-    currentAnalysis: AnalysisResult | null;
+    currentFile: TFile | null
+    currentAnalysis: AnalysisResult | null
 }
 ```
 
@@ -976,6 +996,7 @@ interface SessionState {
 **Decisão:** Arquitetura em camadas com serviços especializados.
 
 **Justificativa:**
+
 - Testabilidade: cada serviço pode ser testado isoladamente
 - Manutenibilidade: mudanças localizadas
 - Extensibilidade: novos analyzers ou providers adicionados facilmente
@@ -992,6 +1013,7 @@ interface SessionState {
 **Decisão:** Gateway abstrai providers com ordem de preferência configurável e fallback automático.
 
 **Justificativa:**
+
 - UX consistente independente de configuração
 - Resiliência: se local falha, cloud assume
 - Flexibilidade: usuário escolhe preferência
@@ -1008,12 +1030,14 @@ interface SessionState {
 **Decisão:** Usar bibliotecas JavaScript para métricas determinísticas; reservar LLM apenas para tarefas que exigem compreensão semântica.
 
 **Justificativa:**
+
 - Performance: análise instantânea sem latência de rede
 - Privacidade: texto nunca sai do dispositivo
 - Consistência: mesma entrada = mesma saída
 - Custo: zero uso de tokens
 
 **LLM reservado para:**
+
 - Avaliação por persona (requer julgamento)
 - Tradução (preservação de contexto)
 - Show vs Tell avançado (requer compreensão narrativa)
@@ -1027,25 +1051,27 @@ interface SessionState {
 **Decisão:** Análise em chunks com Web Workers para operações pesadas.
 
 **Justificativa:**
+
 - Responsividade: UI permanece fluida
 - Progresso: usuário vê andamento
 - Cancelável: operações longas podem ser interrompidas
 
 **Implementação:**
+
 ```typescript
 // Processa em chunks de 5000 palavras
-const CHUNK_SIZE = 5000;
+const CHUNK_SIZE = 5000
 
 async function analyzeInChunks(text: string, onProgress: (n: number) => void) {
-    const chunks = splitIntoChunks(text, CHUNK_SIZE);
-    const results = [];
-    
+    const chunks = splitIntoChunks(text, CHUNK_SIZE)
+    const results = []
+
     for (let i = 0; i < chunks.length; i++) {
-        results.push(await analyzeChunk(chunks[i]));
-        onProgress((i + 1) / chunks.length * 100);
+        results.push(await analyzeChunk(chunks[i]))
+        onProgress(((i + 1) / chunks.length) * 100)
     }
-    
-    return mergeResults(results);
+
+    return mergeResults(results)
 }
 ```
 
@@ -1058,11 +1084,13 @@ async function analyzeInChunks(text: string, onProgress: (n: number) => void) {
 **Decisão:** Cache baseado em hash do conteúdo + debounce de 2 segundos.
 
 **Justificativa:**
+
 - Performance: evita recomputação desnecessária
 - UX: atualizações não interrompem escrita
 - Recursos: reduz uso de CPU
 
 **Invalidação:**
+
 - Hash do documento muda
 - Configurações de análise mudam
 - Cache expira (1 hora)
@@ -1073,18 +1101,18 @@ async function analyzeInChunks(text: string, onProgress: (n: number) => void) {
 
 ```json
 {
-  "dependencies": {
-    "text-readability": "^1.0.5",
-    "compromise": "^14.10.0",
-    "tinyld": "^1.3.4",
-    "reading-time": "^1.5.0"
-  },
-  "devDependencies": {
-    "@types/node": "^18.0.0",
-    "obsidian": "latest",
-    "typescript": "^5.0.0",
-    "esbuild": "^0.19.0"
-  }
+    "dependencies": {
+        "text-readability": "^1.0.5",
+        "compromise": "^14.10.0",
+        "tinyld": "^1.3.4",
+        "reading-time": "^1.5.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18.0.0",
+        "obsidian": "latest",
+        "typescript": "^5.0.0",
+        "esbuild": "^0.19.0"
+    }
 }
 ```
 
@@ -1094,14 +1122,14 @@ async function analyzeInChunks(text: string, onProgress: (n: number) => void) {
 
 ## Considerações de Performance
 
-| Operação | Target | Estratégia |
-|----------|--------|------------|
-| Análise de estatísticas | < 100ms para 50k palavras | Processamento incremental |
+| Operação                | Target                    | Estratégia                 |
+| ----------------------- | ------------------------- | -------------------------- |
+| Análise de estatísticas | < 100ms para 50k palavras | Processamento incremental  |
 | Análise de legibilidade | < 200ms para 50k palavras | text-readability otimizado |
-| Análise de estilo | < 500ms para 50k palavras | Web Worker |
-| Limpeza de texto | < 100ms para 50k palavras | Regex compilado |
-| LLM local (Ollama) | < 5s para resposta | Streaming |
-| LLM cloud | < 3s para resposta | Async com indicador |
+| Análise de estilo       | < 500ms para 50k palavras | Web Worker                 |
+| Limpeza de texto        | < 100ms para 50k palavras | Regex compilado            |
+| LLM local (Ollama)      | < 5s para resposta        | Streaming                  |
+| LLM cloud               | < 3s para resposta        | Async com indicador        |
 
 ### Otimizações Implementadas
 
@@ -1121,11 +1149,11 @@ async function analyzeInChunks(text: string, onProgress: (n: number) => void) {
 // analyzers/ReadabilityAnalyzer.test.ts
 describe('ReadabilityAnalyzer', () => {
     it('should calculate Flesch-Kincaid correctly', () => {
-        const text = 'The cat sat on the mat.';
-        const result = analyzer.analyze(text);
-        expect(result.fleschKincaid).toBeCloseTo(1.8, 1);
-    });
-});
+        const text = 'The cat sat on the mat.'
+        const result = analyzer.analyze(text)
+        expect(result.fleschKincaid).toBeCloseTo(1.8, 1)
+    })
+})
 ```
 
 ### Integração
@@ -1134,17 +1162,18 @@ describe('ReadabilityAnalyzer', () => {
 // services/AnalysisService.test.ts
 describe('AnalysisService', () => {
     it('should combine all analyzers correctly', async () => {
-        const result = await service.analyze(sampleText);
-        expect(result.statistics).toBeDefined();
-        expect(result.readability).toBeDefined();
-        expect(result.style).toBeDefined();
-    });
-});
+        const result = await service.analyze(sampleText)
+        expect(result.statistics).toBeDefined()
+        expect(result.readability).toBeDefined()
+        expect(result.style).toBeDefined()
+    })
+})
 ```
 
 ### E2E (Manual)
 
 Checklist para release:
+
 - [ ] Plugin carrega sem erros
 - [ ] Sidebar exibe métricas corretamente
 - [ ] Limpeza não corrompe markdown
