@@ -80,6 +80,7 @@ export class CompanionView extends ItemView {
                                 <div class="swc-meter__fill" style="width: 0%;"></div>
                             </div>
                             <div class="swc-meter__hint">Ideal: 7-9</div>
+                            <div class="swc-meter__tooltip" style="display:none;">Metrics</div>
                         </div>
 
                         <div class="swc-metric">
@@ -163,8 +164,9 @@ export class CompanionView extends ItemView {
         const fkFill = this.containerEl.querySelector('.swc-meter__fill') as HTMLElement;
         if (fkValue) fkValue.textContent = results.readability.fleschKincaid.toString();
         if (fkFill) {
-            // Map 0-12 range to 0-100%
-            const percent = Math.min(100, Math.max(0, (results.readability.fleschKincaid / 12) * 100));
+            // Sigmoid-like mapping centered at 8 to avoid saturation for high FK
+            const fk = results.readability.fleschKincaid;
+            const percent = Math.round(100 * (1 / (1 + Math.exp(- (fk - 8) / 3))));
             fkFill.style.width = `${percent}%`;
             
             // Color coding
@@ -175,6 +177,17 @@ export class CompanionView extends ItemView {
                  fkFill.classList.add('swc-meter__fill--bad');
             } else {
                  fkFill.classList.add('swc-meter__fill--ok');
+            }
+            // Populate tooltip with raw metrics
+            const tooltip = this.containerEl.querySelector('.swc-meter__tooltip');
+            if (tooltip) {
+                tooltip.textContent = `Flesch ${results.readability.fleschKincaid}, F-Read ${results.readability.fleschReadingEase}, Gunning ${results.readability.gunningFog}, SMOG ${results.readability.smog}`;
+                // show tooltip on hover
+                const parent = fkFill.parentElement;
+                if (parent) {
+                    parent.addEventListener('mouseenter', () => { if (tooltip) (tooltip as HTMLElement).style.display = 'block'; });
+                    parent.addEventListener('mouseleave', () => { if (tooltip) (tooltip as HTMLElement).style.display = 'none'; });
+                }
             }
         }
         

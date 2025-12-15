@@ -1,4 +1,12 @@
 import { ReadabilityMetrics } from '../types';
+// Try to use the 'syllable' package for improved syllable counting; fallback to heuristic
+let syllableLib: ((word: string) => number) | null = null;
+try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    syllableLib = require('syllable');
+} catch (e) {
+    syllableLib = null;
+}
 
 /**
  * Calculates readability metrics (100% local, zero dependencies)
@@ -73,12 +81,16 @@ export class ReadabilityAnalyzer {
     }
 
     private countSyllables(word: string): number {
-        word = word.toLowerCase().replace(/[^a-z]/g, '');
+        if (syllableLib) {
+            try {
+                return Math.max(1, syllableLib(word));
+            } catch (_e) {
+                // fallthrough to heuristic
+            }
+        }
+
+        word = word.toLowerCase().replace(/[^a-záéíóúâêîôûãõàèìòùäëïöü]/g, '');
         if (word.length <= 3) return 1;
-        
-        // Simple heuristic for English/Portuguese overlap
-        // 1. Count vowel groups
-        // 2. Adjust for specific endings
         const matches = word.match(/[aeiouyáéíóúâêîôûãõàèìòùäëïöü]+/g);
         return matches ? matches.length : 1;
     }
