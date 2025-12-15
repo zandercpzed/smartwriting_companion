@@ -64,7 +64,7 @@ export class FictionAnalyzer {
         // Let's use *** and --- as explicit scene breaks, and headers
         
         const sceneBreaks = [
-            ...text.matchAll(/(\n\s*[\*\-_]{3,}\s*\n)|(\n\s*#+\s+)/g)
+              ...text.matchAll(/(\n\s*[*_]{3,}\s*\n)|(\n\s*#+\s+)/g)
         ];
         
         const scenes = [];

@@ -56,12 +56,12 @@ export class StatisticsAnalyzer {
 
     private stripMarkdown(text: string): string {
         // Simple markdown stripper
-        const clean = text
+            const clean = text
             // Headers
             .replace(/^#+\s+/gm, '')
             // Bold/Italic
-            .replace(/(\*\*|__)(.*?)\1/g, '$2')
-            .replace(/(\*|_)(.*?)\1/g, '$2')
+                .replace(/(\*\*|__)(.*?)\1/g, '$2')
+                .replace(/(\*|_)(.*?)\1/g, '$2')
             // Links
             .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
             // Images

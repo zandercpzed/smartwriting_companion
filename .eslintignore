@@ -1,0 +1,5 @@
+main.js
+dist/
+node_modules/
+*.min.js
+**/node_modules
