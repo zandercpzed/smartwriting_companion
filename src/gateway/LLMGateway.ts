@@ -1,4 +1,4 @@
-import { requestUrl, RequestUrlParam } from 'obsidian';
+import { requestUrl /*, RequestUrlParam */ } from 'obsidian';
 import { LLMStatus, CompletionOptions, SWCSettings } from '../types';
 
 export class LLMGateway {
