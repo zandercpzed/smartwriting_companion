@@ -1,4 +1,4 @@
-import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting, Notice } from 'obsidian';
 
 interface SmartWriteSettings {
   exampleSetting: string;
@@ -9,7 +9,7 @@ const DEFAULT_SETTINGS: SmartWriteSettings = {
 }
 
 export default class SmartWriteCompanion extends Plugin {
-  settings: SmartWriteSettings;
+  settings!: SmartWriteSettings;
 
   async onload() {
     await this.loadSettings();

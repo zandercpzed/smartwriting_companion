@@ -8,13 +8,18 @@
     "dev": "parcel src/index.html",
     "watch": "tsc -w"
   },
-  "keywords": ["obsidian", "plugin", "writing"],
+  "keywords": [
+    "obsidian",
+    "plugin",
+    "writing"
+  ],
   "author": "Zander",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "obsidian": "^1.11.0",
     "rollup": "^3.0.0",
-    "rollup-plugin-terser": "^7.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.0"
+    "typescript": "^5.0.0"
   }
 }
