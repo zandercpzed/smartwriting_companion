@@ -4,9 +4,9 @@
   "description": "Obsidian plugin that adds writing tools and integrations",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc && rollup -c",
+    "build": "tsc -p project && rollup -c project/rollup.config.js",
     "dev": "parcel src/index.html",
-    "watch": "tsc -w"
+    "watch": "tsc -w -p project"
   },
   "keywords": [
     "obsidian",
