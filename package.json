@@ -1,12 +1,12 @@
 {
   "name": "smartwrite-companion",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "Obsidian plugin that adds writing tools and integrations",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc -p project && rollup -c project/rollup.config.js",
+    "build": "tsc -p docs && rollup -c docs/rollup.config.js && cp manifest.json dist/ && cp styles.css dist/",
     "dev": "parcel src/index.html",
-    "watch": "tsc -w -p project"
+    "watch": "tsc -w -p docs"
   },
   "keywords": [
     "obsidian",
@@ -21,5 +21,9 @@
     "obsidian": "^1.11.0",
     "rollup": "^3.0.0",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "hyphen": "^1.10.6",
+    "sbd": "^1.0.19"
   }
 }

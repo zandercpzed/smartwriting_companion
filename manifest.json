@@ -1,10 +1,10 @@
 {
   "id": "smartwrite-companion",
   "name": "SmartWrite Companion",
-  "version": "0.0.4",
-  "minAppVersion": "0.12.0",
-  "description": "Ferramentas de escrita e integrações para Obsidian.",
-  "author": "Zander",
-  "authorUrl": "https://github.com/zandercpzed",
+  "version": "0.1.1",
+  "minAppVersion": "0.15.0",
+  "description": "Assistente editorial local-first para autores de ficção no Obsidian",
+  "author": "Zander Catta Preta",
+  "authorUrl": "https://github.com/zandercpzed/text_companion",
   "isDesktopOnly": false
 }
