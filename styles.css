@@ -242,3 +242,72 @@
   opacity: 0.8;
   padding-left: 12px;
 }
+
+/* Readability Styles */
+
+.readability-primary {
+  margin-bottom: 12px;
+}
+
+.readability-bar {
+  height: 8px;
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.readability-bar-fill {
+  height: 100%;
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.readability-dropdown {
+  margin-bottom: 12px;
+}
+
+.readability-dropdown select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.readability-all {
+  border-top: 1px solid var(--background-modifier-border);
+  padding-top: 8px;
+}
+
+.readability-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+  text-align: left;
+}
+
+.readability-scores-list {
+  margin-top: 8px;
+}
+
+.readability-score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.readability-score-item:last-child {
+  border-bottom: none;
+}

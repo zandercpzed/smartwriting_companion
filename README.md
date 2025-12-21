@@ -12,6 +12,7 @@ SmartWrite Companion é um plugin para Obsidian que fornece análises em tempo r
 - **Métricas de Leitura**: Calcula tempo de leitura estimado e velocidade de leitura (WPM)
 - **Rastreamento de Sessão**: Monitora tempo de escrita da sessão atual e progresso diário
 - **Metas Diárias**: Configure e acompanhe metas de palavras por dia
+- **Análise de Legibilidade**: Avalia a dificuldade de leitura com múltiplas fórmulas (Flesch, Gunning Fog, SMOG, etc.)
 - **Interface Modular**: UI em acordeão com seções expansíveis para métricas, sessão e configurações
 - **Otimização de Performance**: Sistema de cache inteligente para atualizações instantâneas
 - **Configurações Personalizáveis**: Painel de configurações para visibilidade de módulos e metas
@@ -48,6 +49,7 @@ SmartWrite Companion is an Obsidian plugin that provides real-time writing analy
 - **Reading Metrics**: Calculates estimated reading time and reading speed (WPM)
 - **Session Tracking**: Monitors current session writing time and daily progress
 - **Daily Goals**: Set and track daily word count goals
+- **Readability Analysis**: Assesses reading difficulty with multiple formulas (Flesch, Gunning Fog, SMOG, etc.)
 - **Modular Interface**: Accordion UI with expandable sections for metrics, session, and settings
 - **Performance Optimization**: Intelligent caching system for instant updates
 - **Customizable Settings**: Settings panel for module visibility and goals
