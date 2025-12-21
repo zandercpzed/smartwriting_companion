@@ -12,10 +12,15 @@
 .sidebar-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 16px 12px;
   border-bottom: 1px solid var(--background-modifier-border);
   background: var(--background-secondary);
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-header h2 {
@@ -23,6 +28,12 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--text-normal);
+}
+
+.version-text {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .settings-btn {
@@ -144,7 +155,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0px;
   padding: 10px 12px;
   background: transparent;
   border: none;
