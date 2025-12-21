@@ -76,6 +76,56 @@
   accent-color: var(--interactive-accent);
 }
 
+.settings-panel .goal-setting {
+  margin-top: 8px;
+}
+
+.settings-panel .goal-setting label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-normal);
+}
+
+.settings-panel .goal-setting input[type="number"] {
+  width: 80px;
+  padding: 4px 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.settings-panel .goal-setting input[type="number"]:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+}
+
+.settings-panel .reset-setting {
+  margin-top: 12px;
+}
+
+.settings-panel .reset-btn {
+  background: var(--background-modifier-error);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.settings-panel .reset-btn:hover {
+  background: var(--background-modifier-error-hover);
+}
+
 .modules-container {
   flex: 1;
   overflow-y: auto;
@@ -94,7 +144,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   padding: 10px 12px;
   background: transparent;
   border: none;
@@ -172,4 +222,23 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+}
+
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.metric-indent {
+  opacity: 0.8;
+  padding-left: 12px;
 }

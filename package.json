@@ -1,10 +1,11 @@
 {
   "name": "smartwrite-companion",
-  "version": "0.1.1",
+  "version": "0.1.7",
   "description": "Obsidian plugin that adds writing tools and integrations",
   "main": "dist/main.js",
   "scripts": {
-    "build": "tsc -p docs && rollup -c docs/rollup.config.js && cp manifest.json dist/ && cp styles.css dist/",
+    "bump-version": "node -e \"const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); const manifest=JSON.parse(fs.readFileSync('manifest.json')); const v=pkg.version.split('.'); v[2]=parseInt(v[2])+1; const newV=v.join('.'); pkg.version=newV; manifest.version=newV; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2)); fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2)); console.log('Version bumped to', newV);\"",
+    "build": "npm run bump-version && tsc -p docs && rollup -c docs/rollup.config.js && cp manifest.json dist/ && cp styles.css dist/",
     "dev": "parcel src/index.html",
     "watch": "tsc -w -p docs"
   },

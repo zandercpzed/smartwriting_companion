@@ -1,7 +1,7 @@
 {
   "id": "smartwrite-companion",
   "name": "SmartWrite Companion",
-  "version": "0.1.1",
+  "version": "0.1.7",
   "minAppVersion": "0.15.0",
   "description": "Assistente editorial local-first para autores de ficção no Obsidian",
   "author": "Zander Catta Preta",
