@@ -1,3 +1,4 @@
+# Updated .gitignore for SmartWrite Companion setup
 node_modules/
 dist/
 .vscode/
@@ -15,3 +16,5 @@ Icon
 .obsidian/
 project/prompts/
 docs/
+main.js
+*.js.map
