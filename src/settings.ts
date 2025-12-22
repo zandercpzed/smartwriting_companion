@@ -1,10 +1,9 @@
-// settings.ts
-// SmartWrite Companion Plugin Settings
-
 export interface SmartWriteSettings {
-  // Define plugin settings here
+	dailyGoal: number;
+	readingSpeed: number;
 }
 
 export const DEFAULT_SETTINGS: SmartWriteSettings = {
-  // Default values for settings
+	dailyGoal: 2000,
+	readingSpeed: 200,
 };

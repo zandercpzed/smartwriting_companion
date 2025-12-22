@@ -2,8 +2,8 @@
   "id": "smartwrite-companion",
   "name": "SmartWrite Companion",
   "version": "0.3.1",
-  "minAppVersion": "0.15.0",
-  "description": "A plugin to enhance writing with readability, metrics, and suggestions.",
+  "minAppVersion": "0.12.0",
+  "description": "A companion plugin for smart writing workflows.",
   "author": "Zander Catta Preta",
   "authorUrl": "https://github.com/zandercpzed",
   "isDesktopOnly": false

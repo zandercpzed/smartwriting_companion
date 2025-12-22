@@ -24,3 +24,8 @@ At each interaction (commit, release, or significant change), the last digit of 
 
 ### Automation
 This rule ensures consistent version tracking and prevents version conflicts.
+
+# Version Rules
+
+- **Current Version:** 0.3.1
+- **Version Increment:** Increment the last digit for code updates (e.g., 0.3.1 → 0.3.2).

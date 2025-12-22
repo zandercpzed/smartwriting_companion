@@ -8,6 +8,7 @@
 
 | Versão | Data | Tipo | Descrição |
 |--------|------|------|-----------|
+| [0.3.1](#031---21-dezembro-2025) | 21 Dez 2025 | Initial | Configuração inicial e recursos básicos |
 | [0.1.7](#017---21-dezembro-2025) | 21 Dez 2025 | Patch | Otimizações de performance e reset de sessão |
 | [0.1.6](#016---21-dezembro-2025) | 21 Dez 2025 | Patch | Correções de espaçamento e configuração |
 | [0.1.5](#015---21-dezembro-2025) | 21 Dez 2025 | Patch | Melhorias na interface e detecção de parágrafos |
@@ -16,6 +17,17 @@
 | [0.1.2](#012---21-dezembro-2025) | 21 Dez 2025 | Patch | Sistema de versionamento automático |
 | [0.1.1](#011---21-dezembro-2025) | 21 Dez 2025 | Minor | Funcionalidades básicas implementadas |
 | [0.1.0](#010---21-dezembro-2025) | 21 Dez 2025 | Initial | Estrutura inicial do plugin |
+
+---
+
+## 🔄 **0.3.1** - 21 de dezembro de 2025
+
+### 🚀 **Configuração Inicial**
+- Estrutura fundamental criada para o plugin SmartWrite Companion.
+- Componentes de acordeão modulares adicionados para a barra lateral.
+- `BasePanel` implementado para comportamento consistente do painel.
+- `styles.css` projetado para a barra lateral.
+- `manifest.json` adicionado com metadados do plugin.
 
 ---
 
@@ -277,5 +289,4 @@ smartwrite-companion/
 
 ---
 
-*Release notes gerados automaticamente em 21 de dezembro de 2025*</content>
-<parameter name="filePath">/Users/zander/Library/CloudStorage/GoogleDrive-zander.cattapreta@zedicoes.com/My Drive/_ programação/_ smartwrite_companion/RELEASE_NOTES.md
+*Release notes gerados automaticamente em 21 de dezembro de 2025*

@@ -1,4 +1,8 @@
-// types.ts
-// Shared types for SmartWrite Companion Plugin
-
-// Define shared types here
+export interface TextMetrics {
+	words: string[];
+	sentences: string[];
+	paragraphs: string[];
+	characters: number;
+	charactersNoSpaces: number;
+	syllables: number;
+}
