@@ -154,9 +154,9 @@
 .module-header {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0px;
+  justify-content: left;
+  align-items: left;
+  gap: 3px;
   padding: 10px 12px;
   background: transparent;
   border: none;
